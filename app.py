@@ -54,5 +54,49 @@ class StudentManager:
         self.save_students()
 
 manager = StudentManager()
+@app.route('/')
+def home():
+    return render_template('home.html')
 
+@app.route('/add', methods=['GET', 'POST'])
+def add_student():
+    if request.method == 'POST':
+        student_id = request.form['student_id']
+        name = request.form['name']
+        age = request.form['age']
+        major = request.form['major']
+        gender = request.form['gender']
+        new_student = Student(student_id, name, age, major, gender)
+        manager.add_student(new_student)
+        return redirect(url_for('home'))
+    return render_template('add_student.html')
+
+@app.route('/search', methods=['GET', 'POST'])
+def search_student():
+    results = []
+    if request.method == 'POST':
+        search_term = request.form['search_term']
+        results = manager.search_student(search_term)
+    return render_template('search_student.html', results=results)
+
+@app.route('/modify/<student_id>', methods=['GET', 'POST'])
+def modify_student(student_id):
+    student = next((s for s in manager.students if s.student_id == student_id), None)
+    if request.method == 'POST' and student:
+        updated_data = {
+            'name': request.form['name'],
+            'age': request.form['age'],
+            'major': request.form['major'],
+            'gender': request.form['gender']
+        }
+        manager.update_student(student_id, updated_data)
+        return redirect(url_for('display_students'))
+    return render_template('modify_student.html', student=student)
+
+@app.route('/display')
+def display_students():
+    return render_template('display_students.html', students=manager.students)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
