@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search Student</title>
+</head>
+<body>
+    <h1>Search Student</h1>
+    <form method="POST">
+        Search by Name or ID: <input typr="text" name="search_term">
+        <button type="submit">Search</button>
+    </form>
+    <h2>Result:</h2>
+    <ul>
+        {% for student in results %}
+        <liv>{{student.student_id }} - {{student.name }}</liv>
+        {% endfor %}
+    </ul>
+</body>
+</html>
