@@ -20,7 +20,7 @@ class StudentManager:
         students = []
         try: 
             with open(self.filename, 'r') as file:
-                reader = csv.read(file)
+                reader = csv.reader(file)
                 for row in reader:
                     if row: 
                         students.append(Student(*row))
