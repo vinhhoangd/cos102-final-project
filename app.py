@@ -9,7 +9,7 @@ class Student:
         self.name = name
         self.age = age
         self.major = major
-        self.gende = gender
+        self.gender = gender
 
 class StudentManager:
     def __init__(self, filename='students.csv'):
@@ -35,7 +35,7 @@ class StudentManager:
                 writer.writerow([student.student_id, student.name, student.age, student.major, student.major, student.gender])
 
     def add_student(self, student):
-        self.student.append(student)
+        self.students.append(student)
         self.save_students()
 
     def search_student(self, search_term):
