@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Modify Student</title>
+</head>
+<body>
+    <h1>Modify Student</h1>
+    {% if student %}
+    <form method="POST">
+        Name: <input type="text" name="name" value="{{ student.name }}"><br>
+        Age: <input type="number" name="age" value="{{ student.age }}"><br>
+        Major: <input type="text" name="major" value="{{ student.major }}"><br>
+        Gender: 
+        <input type="radio" name="gender" value="Male" {% if student.gender == "Male" %}checked{% endif %}> Male
+        <input type="radio" name="gender" value="Female" {% if student.gender == "Female" %}checked{% endif %}> Female
+        <input type="radio" name="gender" value="Other" {% if student.gender == "Other" %}checked{% endif %}> Other<br>
+        <button type="submit">Update</button>
+    </form>
+    {% else %}
+    <p>Student not found!</p>
+    {% endif %}
+</body>
+</html>
