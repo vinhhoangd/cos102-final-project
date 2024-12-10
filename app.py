@@ -3,6 +3,7 @@ import csv
 
 app = Flask(__name__)
 
+
 class Student:
     def __init__(self, student_id, name, age, major, gender):
         self.student_id = student_id
@@ -11,39 +12,41 @@ class Student:
         self.major = major
         self.gender = gender
 
+
 class StudentManager:
     def __init__(self, filename='students.csv'):
         self.filename = filename
-        self.students = self.load_students()
+        self.students = self.load_students()  # Initialize self.students by loading from file
 
     def load_students(self):
         students = []
-        try: 
+        try:
             with open(self.filename, 'r') as file:
                 reader = csv.reader(file)
                 for row in reader:
-                    if row: 
+                    if len(row) == 5:  # Ensure row has exactly 5 elements
                         students.append(Student(*row))
         except FileNotFoundError:
             pass
         return students
-    
+
     def save_students(self):
         with open(self.filename, 'w', newline='') as file:
             writer = csv.writer(file)
             for student in self.students:
-                writer.writerow([student.student_id, student.name, student.age, student.major, student.major, student.gender])
+                writer.writerow([student.student_id, student.name, student.age, student.major,
+                                 student.gender])  # Fix: removed duplicate major
 
     def add_student(self, student):
         self.students.append(student)
         self.save_students()
 
     def search_student(self, search_term):
-        return[
+        return [
             student for student in self.students
             if search_term.lower() in student.name.lower() or student.student_id == search_term
         ]
-          
+
     def update_student(self, student_id, updated_data):
         for student in self.students:
             if student.student_id == student_id:
@@ -53,10 +56,17 @@ class StudentManager:
                 student.gender = updated_data.get('gender', student.gender)
         self.save_students()
 
+    def delete_student(self, student_id):
+        self.students = [student for student in self.students if student.student_id!= student_id]
+        self.save_students()
+
 manager = StudentManager()
+
+
 @app.route('/')
 def home():
     return render_template('home.html')
+
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_student():
@@ -71,6 +81,7 @@ def add_student():
         return redirect(url_for('home'))
     return render_template('add_student.html')
 
+
 @app.route('/search', methods=['GET', 'POST'])
 def search_student():
     results = []
@@ -78,6 +89,7 @@ def search_student():
         search_term = request.form['search_term']
         results = manager.search_student(search_term)
     return render_template('search_student.html', results=results)
+
 
 @app.route('/modify/<student_id>', methods=['GET', 'POST'])
 def modify_student(student_id):
@@ -93,9 +105,17 @@ def modify_student(student_id):
         return redirect(url_for('display_students'))
     return render_template('modify_student.html', student=student)
 
+
 @app.route('/display')
 def display_students():
     return render_template('display_students.html', students=manager.students)
+
+@app.route('/delete/<student_id>', methods=['POST'])
+def delete_student(student_id):
+    manager.delete_student(student_id)
+    return redirect(url_for('display_students'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
