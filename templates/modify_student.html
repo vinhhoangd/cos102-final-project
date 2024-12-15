@@ -1,19 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modify Student</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #212529;
+            text-align: center;
+        }
+        h1 {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        form {
+            display: inline-block;
+            background-color: #ffffff;
+            padding: 30px;
+            margin: 30px auto;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #343a40;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        .radio-group {
+            margin: 10px 0 20px;
+        }
+        button {
+            background-color: #343a40;
+            color: #ffffff;
+            border: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        button:hover {
+            background-color: #495057;
+        }
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 5px #343a40;
+        }
+        p {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>Modify Student</h1>
     {% if student %}
     <form method="POST">
-        Name: <input type="text" name="name" value="{{ student.name }}"><br>
-        Age: <input type="number" name="age" value="{{ student.age }}"><br>
-        Major: <input type="text" name="major" value="{{ student.major }}"><br>
-        Gender: 
-        <input type="radio" name="gender" value="Male" {% if student.gender == "Male" %}checked{% endif %}> Male
-        <input type="radio" name="gender" value="Female" {% if student.gender == "Female" %}checked{% endif %}> Female
-        <input type="radio" name="gender" value="Other" {% if student.gender == "Other" %}checked{% endif %}> Other<br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ student.name }}" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" value="{{ student.age }}" required>
+
+        <label for="major">Major:</label>
+        <input type="text" id="major" name="major" value="{{ student.major }}" required>
+
+        <div class="radio-group">
+            <label>Gender:</label>
+            <input type="radio" name="gender" value="Male" {% if student.gender == "Male" %}checked{% endif %}> Male
+            <input type="radio" name="gender" value="Female" {% if student.gender == "Female" %}checked{% endif %}> Female
+            <input type="radio" name="gender" value="Other" {% if student.gender == "Other" %}checked{% endif %}> Other
+        </div>
+
         <button type="submit">Update</button>
     </form>
     {% else %}

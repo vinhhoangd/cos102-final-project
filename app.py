@@ -19,13 +19,14 @@ class StudentManager:
         self.students = self.load_students()  # Initialize self.students by loading from file
 
     def load_students(self):
-        students = []
+        students = []  # Fixed indentation here
         try:
             with open(self.filename, 'r') as file:
                 reader = csv.reader(file)
                 for row in reader:
                     if len(row) == 5:  # Ensure row has exactly 5 elements
-                        students.append(Student(*row))
+                        student_id, name, age, major, gender = row
+                        students.append(Student(student_id, name, age, major, gender))
         except FileNotFoundError:
             pass
         return students
@@ -34,8 +35,7 @@ class StudentManager:
         with open(self.filename, 'w', newline='') as file:
             writer = csv.writer(file)
             for student in self.students:
-                writer.writerow([student.student_id, student.name, student.age, student.major,
-                                 student.gender])  # Fix: removed duplicate major
+                writer.writerow([student.student_id, student.name, student.age, student.major, student.gender])
 
     def add_student(self, student):
         self.students.append(student)
@@ -57,8 +57,9 @@ class StudentManager:
         self.save_students()
 
     def delete_student(self, student_id):
-        self.students = [student for student in self.students if student.student_id!= student_id]
+        self.students = [student for student in self.students if student.student_id != student_id]
         self.save_students()
+
 
 manager = StudentManager()
 
@@ -109,6 +110,7 @@ def modify_student(student_id):
 @app.route('/display')
 def display_students():
     return render_template('display_students.html', students=manager.students)
+
 
 @app.route('/delete/<student_id>', methods=['POST'])
 def delete_student(student_id):

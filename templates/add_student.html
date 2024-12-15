@@ -1,26 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Student</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #212529;
+            text-align: center;
+        }
+        h1 {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        form {
+            margin: 30px auto;
+            width: 50%;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+        button {
+            background-color: #343a40;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #495057;
+        }
+    </style>
 </head>
 <body>
     <h1>Add Student</h1>
-    <form method =  "POST">
-        ID: <input type="text" name="student_id" required><br>
-        Name: <input type="text" name="name" required><br>
-        Age: <input type="number" name="age" required><br>
-        Major:
-        <select name="major">
+    <form method="POST">
+        <input type="text" name="student_id" placeholder="ID" required>
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="number" name="age" placeholder="Age" required>
+        <select name="major" required>
+            <option value="" disabled selected>Select Major</option>
             <option>Computer Science</option>
             <option>Data Science</option>
             <option>Statistic</option>
             <option>Business</option>
             <option>Graphic Design</option>
-        </select><br>
+        </select>
         Gender: 
-        <input type="radio" name="gender" value="Male" required> Male
-        <input type="radio" name="gender" value="Female" required> Female
+        <label><input type="radio" name="gender" value="Male" required> Male</label>
+        <label><input type="radio" name="gender" value="Female" required> Female</label>
         <button type="submit">Submit</button>
-     </form>
+    </form>
 </body>
 </html>
+

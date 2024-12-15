@@ -1,19 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Student</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #212529;
+            text-align: center;
+        }
+        h1 {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+            margin: 0;
+            font-size: 2.5em;
+        }
+        form {
+            margin: 30px auto;
+            width: 50%;
+        }
+        input, button {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+        button {
+            background-color: #343a40;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #495057;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 10px auto;
+            width: 50%;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
     <h1>Search Student</h1>
     <form method="POST">
-        Search by Name or ID: <input typr="text" name="search_term">
+        <input type="text" name="search_term" placeholder="Search by Name or ID" required>
         <button type="submit">Search</button>
     </form>
-    <h2>Result:</h2>
+    <h2>Results:</h2>
     <ul>
         {% for student in results %}
-        <liv>{{student.student_id }} - {{student.name }}</liv>
+        <li>{{ student.student_id }} - {{ student.name }}</li>
         {% endfor %}
     </ul>
 </body>
 </html>
+
