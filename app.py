@@ -16,15 +16,15 @@ class Student:
 class StudentManager:
     def __init__(self, filename='students.csv'):
         self.filename = filename
-        self.students = self.load_students()  # Initialize self.students by loading from file
+        self.students = self.load_students()
 
     def load_students(self):
-        students = []  # Fixed indentation here
+        students = []
         try:
             with open(self.filename, 'r') as file:
                 reader = csv.reader(file)
                 for row in reader:
-                    if len(row) == 5:  # Ensure row has exactly 5 elements
+                    if len(row) == 5:
                         student_id, name, age, major, gender = row
                         students.append(Student(student_id, name, age, major, gender))
         except FileNotFoundError:
